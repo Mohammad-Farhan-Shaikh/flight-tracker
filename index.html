@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlightTrack — Real-Time Flight Status</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body class="bg-gray-200 min-h-screen relative font-sans text-gray-800">
+  <!-- Background overlay image from local assets with webp and jpg fallback -->
+  <picture class="fixed inset-0 z-0 opacity-80 pointer-events-none">
+    <source srcset="/src/assets/bg-img1.webp" type="image/webp" />
+    <img src="/src/assets/bg-img.jpg" alt="Flight Tracker Background"
+      class="w-full h-full object-cover object-center" />
+  </picture>
+  <div class="fixed inset-0 z-0 bg-gradient-to-b from-white/10 to-gray-300/30 pointer-events-none"></div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 w-full py-4 px-6 border-b border-gray-400/20 bg-white/20 backdrop-blur-md shadow-sm">
+    <div class="max-w-[1000px] mx-auto flex items-center">
+      <a href="/" class="flex items-center gap-2 text-gray-800 hover:text-gray-900 transition-colors">
+        <i data-lucide="plane-takeoff" class="w-6 h-6"></i>
+        <span class="text-xl font-bold tracking-tight">Flight Tracker</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="relative z-10 w-full max-w-[1000px] mx-auto px-4 pt-12 pb-24">
+
+    <!-- Top Text -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Track your flight, anywhere in the world</h1>
+      <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
+        Stay updated with real-time flight status, gate changes, and live arrival times.
+        Our tracker gives you precise data on global flights so you never miss a beat.
+      </p>
+    </div>
+
+    <!-- Search Bar Card -->
+    <div class="bg-white rounded shadow-xl overflow-hidden mb-6">
+      <div class="flex flex-col md:flex-row">
+        <div class="flex-1 flex items-center px-4 py-3 md:border-r border-gray-200">
+          <i data-lucide="building-2" class="w-5 h-5 text-gray-400 mr-3"></i>
+          <input type="text" placeholder="Airline (e.g. United Airlines)"
+            class="w-full airline-search text-sm outline-none text-gray-700 placeholder-gray-400" />
+        </div>
+        <div class="flex-1 flex items-center px-4 py-3 md:border-r border-gray-200">
+          <i data-lucide="plane" class="w-5 h-5 text-gray-400 mr-3 transform -rotate-45"></i>
+          <input type="text" placeholder="Flight Number (e.g. UA2402)"
+            class="w-full flight-number text-sm outline-none text-gray-700 placeholder-gray-400" />
+        </div>
+        <div class="flex-1 flex items-center px-4 py-3">
+          <i data-lucide="calendar" class="w-5 h-5 text-gray-400 mr-3"></i>
+          <input type="date" value="2026-04-26"
+            class="w-full date-input text-sm outline-none text-gray-700 placeholder-gray-400" />
+          <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 ml-2 cursor-pointer"></i>
+        </div>
+        <button
+          class="bg-[#6b7b8c] hover:bg-[#5a6776] search-btn text-white text-sm font-bold tracking-wide px-8 py-4 transition-colors">
+          SEARCH FLIGHT
+        </button>
+      </div>
+    </div>
+
+    <!-- Result Card -->
+    <div class="bg-white rounded shadow-xl overflow-hidden result-card hidden">
+      <!-- Flight Header Info -->
+      <div class="bg-[#f8f9fa] flex flex-col md:flex-row items-center border-b border-gray-200 relative">
+        <!-- Left: Airline Info -->
+        <div class="p-4 py-3 flex-1 md:flex-none md:w-48 text-center md:text-left">
+          <h2 class="text-2xl font-bold text-gray-800 leading-tight res-flight-number">UA2402</h2>
+          <p class="text-xs text-[#5d6778] res-airline-name">United Airlines (UA)</p>
+        </div>
+
+        <!-- Middle: Route -->
+        <div class="p-4 py-3 flex-1 flex items-center justify-center space-x-6">
+          <div class="text-center flex flex-col items-center">
+            <div class="text-lg font-bold text-gray-800 leading-none mb-1 dep-iata">LAX</div>
+            <div class="text-[10px] text-[#5d6778] leading-none dep-airport">Los Angeles Int.</div>
+          </div>
+          <div class="flex items-center justify-center h-full">
+            <i data-lucide="plane" class="w-5 h-5 text-gray-800 transform rotate-45"></i>
+          </div>
+          <div class="text-center flex flex-col items-center">
+            <div class="text-lg font-bold text-gray-800 leading-none mb-1 arr-iata">BOS</div>
+            <div class="text-[10px] text-[#5d6778] leading-none arr-airport">Logan Int.</div>
+          </div>
+        </div>
+
+        <!-- Right: Status -->
+        <div
+          class="bg-[#2bc155] text-white p-4 py-3 flex flex-col justify-center min-h-full absolute right-0 top-0 bottom-0 md:relative md:w-48 status-bg">
+          <div class="text-lg font-bold res-status">Airborne</div>
+          <div class="text-xs font-medium opacity-90 res-status-detail">On Time</div>
+        </div>
+      </div>
+
+      <!-- Flight Details -->
+      <div class="bg-white relative">
+        <div class="flex flex-col md:flex-row">
+
+          <!-- Departure Column -->
+          <div class="flex-1 p-5 md:border-r border-gray-200 flex flex-col items-center">
+            <span
+              class="bg-[#e9ecef] text-[#495057] text-[10px] font-semibold px-3 py-0.5 rounded-full mb-3">Departure</span>
+            <h3 class="text-base font-semibold text-gray-800 mb-1 dep-airport-full">Los Angeles International</h3>
+            <p class="text-[10px] text-[#868e96] mb-5 uppercase tracking-wider">IATA: <span
+                class="dep-iata-small">LAX</span> <span class="mx-1">•</span>
+              ICAO:
+              <span class="dep-icao">KLAX</span>
+            </p>
+
+            <!-- Timings Grid -->
+            <div
+              class="w-full grid grid-cols-2 gap-[1px] bg-gray-200 border border-gray-200 mb-5 rounded overflow-hidden">
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Scheduled</span>
+                <span class="text-xs text-gray-700 dep-scheduled">2019-12-11 23:30:00</span>
+              </div>
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Estimated</span>
+                <span class="text-xs text-gray-700 dep-estimated">2019-12-11 23:30:00</span>
+              </div>
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Actual</span>
+                <span class="text-xs text-gray-700 dep-actual">2019-12-11 23:34:00</span>
+              </div>
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Runway</span>
+                <span class="text-xs text-gray-700 dep-runway">2019-12-11 23:34:00</span>
+              </div>
+            </div>
+
+            <!-- Terminal & Gate -->
+            <div class="flex gap-3 mt-auto">
+              <div class="flex border border-gray-300 rounded overflow-hidden shadow-sm">
+                <div class="bg-[#6b7b8c] text-white text-[10px] font-bold px-2.5 py-1 border-r border-[#6b7b8c]">
+                  Terminal
+                </div>
+                <div
+                  class="bg-white text-gray-800 text-[10px] font-bold px-3 py-1 flex items-center justify-center min-w-[32px] dep-terminal">
+                  7</div>
+              </div>
+              <div class="flex border border-gray-300 rounded overflow-hidden shadow-sm">
+                <div class="bg-[#6b7b8c] text-white text-[10px] font-bold px-2.5 py-1 border-r border-[#6b7b8c]">Gate
+                </div>
+                <div
+                  class="bg-white text-gray-800 text-[10px] font-bold px-3 py-1 flex items-center justify-center min-w-[32px] dep-gate">
+                  73</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Arrival Column -->
+          <div class="flex-1 p-5 flex flex-col items-center">
+            <span
+              class="bg-[#e9ecef] text-[#495057] text-[10px] font-semibold px-3 py-0.5 rounded-full mb-3">Arrival</span>
+            <h3 class="text-base font-semibold text-gray-800 mb-1 arr-airport-full">Logan International</h3>
+            <p class="text-[10px] text-[#868e96] mb-5 uppercase tracking-wider">IATA: <span
+                class="arr-iata-small">BOS</span> <span class="mx-1">•</span>
+              ICAO:
+              <span class="arr-icao">KBOS</span>
+            </p>
+
+            <!-- Timings Grid -->
+            <div
+              class="w-full grid grid-cols-2 gap-[1px] bg-gray-200 border border-gray-200 mb-5 rounded overflow-hidden">
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Scheduled</span>
+                <span class="text-xs text-gray-700 arr-scheduled">2019-12-12 07:54:00</span>
+              </div>
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Estimated</span>
+                <span class="text-xs text-gray-700 arr-estimated">2019-12-12 07:54:00</span>
+              </div>
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Actual</span>
+                <span class="text-xs text-gray-700 arr-actual">2019-12-12 07:54:00</span>
+              </div>
+              <div class="bg-[#f8f9fa] flex flex-col items-center p-2">
+                <span class="text-[10px] text-[#5d6778] mb-0.5">Runway</span>
+                <span class="text-xs text-gray-700 arr-runway">2019-12-12 07:54:00</span>
+              </div>
+            </div>
+
+            <!-- Terminal & Gate -->
+            <div class="flex gap-3 mt-auto">
+              <div class="flex border border-gray-300 rounded overflow-hidden shadow-sm">
+                <div class="bg-[#6b7b8c] text-white text-[10px] font-bold px-2.5 py-1 border-r border-[#6b7b8c]">
+                  Terminal
+                </div>
+                <div
+                  class="bg-white text-gray-800 text-[10px] font-bold px-3 py-1 flex items-center justify-center min-w-[32px] arr-terminal">
+                  B</div>
+              </div>
+              <div class="flex border border-gray-300 rounded overflow-hidden shadow-sm">
+                <div class="bg-[#6b7b8c] text-white text-[10px] font-bold px-2.5 py-1 border-r border-[#6b7b8c]">Gate
+                </div>
+                <div
+                  class="bg-white text-gray-800 text-[10px] font-bold px-3 py-1 flex items-center justify-center min-w-[32px] arr-gate">
+                  B27</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Show More Button -->
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-10">
+          <button
+            class="bg-white border border-gray-200 text-gray-500 text-xs px-4 py-1 hover:bg-gray-50 transition-colors shadow-sm">
+            Show More
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="bg-[#e9ecef] border-t border-gray-200 px-6 py-3 mt-4 text-xs text-[#5d6778] flex items-center">
+        <span class="font-medium mr-1">Departure Timezone:</span> America/Los_Angeles
+        <span class="mx-3 text-[10px] text-gray-400">•</span>
+        <span class="font-medium mr-1">Arrival Timezone:</span> America/New_York
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
