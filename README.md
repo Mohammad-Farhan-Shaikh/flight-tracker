@@ -2,7 +2,7 @@
 
 A professional, high-performance flight tracking web application designed for simplicity and speed. Built with modern web technologies, it provides real-time updates on global flights including status, gate assignments, and precise arrival timings.
 
-![Flight Tracker Preview](public/preview.png) *(Add your screenshot here)*
+![Flight Tracker Preview](public/preview.png) 
 
 ## 🌟 Features
 
