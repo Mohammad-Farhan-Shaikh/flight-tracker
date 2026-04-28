@@ -32,7 +32,7 @@ A professional, high-performance flight tracking web application designed for si
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/flight-tracker.git
+   git clone https://github.com/Mohammad-Farhan-Shaikh/flight-tracker.git
    cd flight-tracker
    ```
 
